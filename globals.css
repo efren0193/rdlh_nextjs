@@ -3,12 +3,6 @@
 @tailwind utilities;
 
 
-.slide{
-    background-image: url('https://res.cloudinary.com/dfmzimnpq/image/upload/w_2000/montania1_3.8.1_j7daos.jpg');
-    background-size: cover;
-    background-position: center center;
-}
-
 .hide-scroll-bar {
   -ms-overflow-style: none;
   scrollbar-width: none;

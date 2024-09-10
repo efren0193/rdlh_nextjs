@@ -8,7 +8,7 @@ export default function HomePage() {
     return <div className="dark:bg-dark bg-light"> 
         <Slider 
             title={'Explora, admira y conectate'} 
-            subtitle={'Capturamos la belleza de la región a través de la producción de audio, video y fotografía'}
+            subtitle={'Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía'}
             main={true}
         />
         <Services main={true}/>

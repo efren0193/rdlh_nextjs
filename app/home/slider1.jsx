@@ -6,7 +6,10 @@ import SvgDiagonal2 from "./svg-diagonal2";
 export default function Slider1() {
     
     return (
-        <div className='slide sm:h-[23rem] md:h-[25rem] lg:h-[28rem] xl:h-[32rem]'>
+        <div 
+            className='bg-cover bg-center sm:h-[23rem] md:h-[25rem] lg:h-[28rem] xl:h-[32rem]'
+            style={{backgroundImage: `url('https://res.cloudinary.com/dfmzimnpq/image/upload/w_2000/montania1_3.8.1_j7daos.jpg')`}}
+        >
             <SvgComponent className=" dark:text-dark text-light bg-neutral-950 bg-opacity-50"/>
             <div className="min-h-[15rem] py-6 md:py-0 flex items-center w-full bg-neutral-950 bg-opacity-50">
                 <div className=" m-auto text-primary text-center">

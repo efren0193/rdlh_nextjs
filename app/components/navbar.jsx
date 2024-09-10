@@ -20,6 +20,10 @@ const Navbar = () => {
     setNav(!nav);
   };
 
+  const closeNav = () => {
+    setNav(false);
+  };
+
   const handleScroll = () => {
     const position = window.scrollY;
     setScrollPosition(position);
@@ -49,7 +53,7 @@ const Navbar = () => {
   const navItems = [
     { id: 1, text: 'Home', href: '/' },
     { id: 2, text: 'Servicios', href:'/servicios'},
-    // { id: 3, text: 'Resources' },
+    { id: 3, text: 'Producción', href:'/produccion' },
     // { id: 4, text: 'About' },
     { id: 5, text: '', html: theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />},
   ];
@@ -59,10 +63,12 @@ const Navbar = () => {
         <div className=' flex justify-between h-20 items-center px-4 sm:px-8 md:max-w-screen-md lg:max-w-screen-lg mx-auto '>
             {/* Logo */}
             <h1 className='w-full text-3xl font-bold'>
-            <CldImage
-                width="100"
-                height="100"
-                src="rh_fb_pz9mbv"/>
+            <Link href={'/'}>
+              <CldImage
+                  width="100"
+                  height="100"
+                  src="rh_fb_pz9mbv"/>
+            </Link>
             </h1>
 
             {/* Desktop Navigation */}
@@ -97,7 +103,9 @@ const Navbar = () => {
                 }
             >
                 {/* Mobile Logo */}
-                <h1 className='w-full text-3xl font-bold m-4'>RH</h1>
+                <Link href={'/'} onClick={closeNav}>
+                  <h1 className='w-full text-3xl font-bold m-4'>RH</h1>
+                </Link>
 
                 {/* Mobile Navigation Items */}
                 {navItems.map(item => (
@@ -106,7 +114,7 @@ const Navbar = () => {
                     className='p-4 border-b  hover:bg-primary duration-300 hover:text-black cursor-pointer border-darkPrimary'
                 >
                     {item.text ?
-                      <Link href={item.href}>
+                      <Link href={item.href} onClick={closeNav}>
                         {item.text}
                       </Link>
                     :

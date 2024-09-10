@@ -3,10 +3,18 @@ import React from "react";
 import Button from "./atoms/custom-button";
 import SvgComponent from "../home/svg-diagonal";
 
-export default function Slider({title, subtitle, main=false}) {
+export default function Slider({
+    title, 
+    subtitle, 
+    main=false,
+    bg='https://res.cloudinary.com/dfmzimnpq/image/upload/w_2000/montania1_3.8.1_j7daos.jpg'
+}) {
     
     return (
-        <div className={`slide w-full ${main ? 'h-[45rem]': 'h-[30rem]'} relative`}>
+        <div 
+            className={`bg-cover bg-center w-full ${main ? 'h-[45rem]': 'h-[30rem]'} relative`}
+            style={{backgroundImage: `url(${bg})`}}
+        >
             <div className={`absolute top-0 bg-neutral-950 bg-opacity-50 w-full ${main ? 'h-[45rem]': 'h-[30rem]'}`}></div>
             <div className={`absolute ${main ? 'h-[45rem]': 'h-[30rem]'} flex w-full`}>
                 <div className="m-auto text-primary text-center">

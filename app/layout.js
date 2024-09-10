@@ -4,8 +4,8 @@ import '../globals.css'
 import Footer from "./components/footer";
 
 export const metadata = {
-  title: 'RH',
-  description: 'Rincon de la Huasteca',
+  title: 'Rincón de la Huasteca',
+  description: 'Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía.',
 }
 
 export default function RootLayout({ children }) {

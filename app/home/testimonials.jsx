@@ -18,7 +18,10 @@ async function Testimonials() {
 
     const testimonials = await loadTestimonials();
     return (
-        <div className='slide text-primary'>
+        <div 
+            className='bg-cover bg-center text-primary'
+            style={{backgroundImage: 'url(https://res.cloudinary.com/dfmzimnpq/image/upload/w_2000/montania1_3.8.1_j7daos.jpg)'}}
+        >
             <SvgDiagonal3 className='w-full dark:text-black text-white bg-neutral-950 bg-opacity-50' />
             <div className="min-h-[15rem] md:h-[20rem] py-6 md:py-0 w-full bg-neutral-950 bg-opacity-50 grid">
                 
