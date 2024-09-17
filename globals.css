@@ -10,3 +10,20 @@
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+
+lite-youtube{
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+
+/* LightBox */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 50; /* Para asegurarse de que esté encima de todo */
+}

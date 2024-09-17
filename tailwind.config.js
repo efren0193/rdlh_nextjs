@@ -33,7 +33,7 @@ module.exports = {
         darkPrimary: '#808D7C',
         darkSecondary: '#395B64',
         darkWhite: '#A5C9CA',
-        darkSecondary: '#E7F6F2'
+        darkSecondary: '#DDD'
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

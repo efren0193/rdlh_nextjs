@@ -1,19 +1,10 @@
-import { db } from "../firebase-config";
-import { collection,getDocs, limit, query } from "firebase/firestore";
 import Card from "./molecules/card";
 import CustomLink from "./atoms/custom-link";
+import { getServicios } from "../services";
 
-async function loadServices(main) {
-    const q = main ? query(collection(db, "servicios"), limit(3)) : query(collection(db, "servicios"));
-    const servRef = await getDocs(q);
-    const data = [];
-
-    servRef.forEach((doc) => data.push({id: doc.id, ...doc.data()}))
-    return data;
-}
 
 async function Services({main=false}) {
-    const services = await loadServices(main);
+    const services = await getServicios(main);
 
     return (
         <div>
@@ -27,7 +18,7 @@ async function Services({main=false}) {
                                 type={'image'}
                                 image={service.images[0]}
                                 name={service.name}
-                                slug={service.slug}
+                                slug={`/servicios/${service.slug}`}
                             ></Card>
                         </div>
                     })}

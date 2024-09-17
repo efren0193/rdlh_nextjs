@@ -53,7 +53,7 @@ const Navbar = () => {
   const navItems = [
     { id: 1, text: 'Home', href: '/' },
     { id: 2, text: 'Servicios', href:'/servicios'},
-    { id: 3, text: 'Producción', href:'/produccion' },
+    { id: 3, text: 'Producciones', href:'/producciones' },
     // { id: 4, text: 'About' },
     { id: 5, text: '', html: theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />},
   ];
@@ -90,6 +90,9 @@ const Navbar = () => {
             </ul>
 
             {/* Mobile Navigation Icon */}
+            <div className='block md:hidden mr-6 cursor-pointer'>
+              {theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />}
+            </div>
             <div onClick={handleNav} className='block md:hidden'>
                 {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
             </div>
@@ -108,20 +111,19 @@ const Navbar = () => {
                 </Link>
 
                 {/* Mobile Navigation Items */}
-                {navItems.map(item => (
-                <li
+                {navItems.map(item => {
+                return item.text && <li
                     key={item.id}
                     className='p-4 border-b  hover:bg-primary duration-300 hover:text-black cursor-pointer border-darkPrimary'
                 >
-                    {item.text ?
+                    {item.text &&
                       <Link href={item.href} onClick={closeNav}>
                         {item.text}
                       </Link>
-                    :
-                    item.html
+                    
                     }
                 </li>
-                ))}
+              })}
             </ul>
         </div>
     </div>

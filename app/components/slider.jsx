@@ -2,12 +2,13 @@
 import React from "react";
 import Button from "./atoms/custom-button";
 import SvgComponent from "../home/svg-diagonal";
+import CustomLink from "./atoms/custom-link";
 
 export default function Slider({
     title, 
     subtitle, 
     main=false,
-    bg='https://res.cloudinary.com/dfmzimnpq/image/upload/w_2000/montania1_3.8.1_j7daos.jpg'
+    bg=`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}w_2000/montania1_3.8.1_j7daos.jpg`
 }) {
     
     return (
@@ -20,13 +21,9 @@ export default function Slider({
                 <div className="m-auto text-primary text-center">
                     <h1 className="text-5xl md:text-6xl mb-5">{title}</h1>
                     <p className="text-lg m-auto md:text-2xl md:w-3/4 px-4">{subtitle}</p>
-                   {main && <div className="grid md:flex md:justify-around justify-center items-center m-auto mt-24 w-full md:w-1/2">
-                            <div className=" mt-4 md:mt-0">
-                                <Button text="Nuestro Trabajo"/>
-                            </div>
-                            <div className="mt-8 md:mt-0 mx-auto md:mx-0">
-                                <Button text="Contáctanos"/>
-                            </div>
+                   {main && <div className="grid md:flex md:justify-around justify-center items-center m-auto mt-24 w-full md:w-1/2 gap-6 md:gap-0">
+                            <CustomLink href={'/producciones'} text={'Nuestro Trabajo'}/>
+                            <Button text="Contáctanos"/>
                     </div>
                     }
                 </div>
