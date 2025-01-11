@@ -1,22 +1,12 @@
-import { db } from "../firebase-config";
-import { collection,getDocs, query } from "firebase/firestore";
+import { getTestimonials } from "../services"
 import SvgComponent from "./svg-diagonal";
 import SvgDiagonal3 from "./svg-diagonal3";
 import TestimonialContent from "../components/testimonial-content";
 
 
-async function loadTestimonials() {
-    const q = query(collection(db, "testimonios"));
-    const servRef = await getDocs(q);
-    const data = [];
-
-    servRef.forEach((doc) => data.push({id: doc.id, ...doc.data()}))
-    return data;
-}
-
 async function Testimonials() {
 
-    const testimonials = await loadTestimonials();
+    const testimonials = await getTestimonials();
     return (
         <div 
             className='bg-cover bg-center text-primary'

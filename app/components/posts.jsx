@@ -16,7 +16,7 @@ const Posts = () => {
         setLoading(true);
         const { newPosts, lastVisible } = await getTrabajos(6, null); // No pasamos `startAfter` en la primera carga
         setPosts(newPosts);
-        setLastDoc(lastVisible); // Guardamos el último documento
+        setLastDoc(lastVisible);
         setLoading(false);
     };
 
@@ -47,7 +47,7 @@ const Posts = () => {
     };
 
     return (
-        <div className={`pb-4 py-4 md:py-0`}>
+        <div className={`py-8 `}>
             <div className="px-4 sm:px-8 md:max-w-screen-md lg:max-w-screen-lg m-auto pb-8">
                 {loading ? renderLoading() : (
                     <>

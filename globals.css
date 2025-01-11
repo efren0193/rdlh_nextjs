@@ -16,6 +16,17 @@ lite-youtube{
   border-top-right-radius: 0.5rem;
 }
 
+.dashboard-gallery lite-youtube{
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.dashboard-gallery div{
+  width: 100% !important;
+  margin: auto;
+  /* box-shadow: 0px 0px 5px 0px; */
+}
+
 
 /* LightBox */
 .overlay {

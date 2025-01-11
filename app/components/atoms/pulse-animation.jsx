@@ -1,6 +1,6 @@
 export function PulseAnimation() {
     return (
-        <div className="shadow-lg rounded-md p-4 max-w-sm w-full mx-auto 
+        <div className="shadow-lg rounded-md p-4 w-full mx-auto 
                     bg-gradient-to-b from-white via-white to-darkSecondary dark:from-dark dark:via-dark dark:to-secondaryDark 
                     dark:border border-gray-500">
             <div className="animate-pulse flex space-x-4">

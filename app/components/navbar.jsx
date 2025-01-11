@@ -51,10 +51,10 @@ const Navbar = () => {
 
   // Array containing navigation items
   const navItems = [
-    { id: 1, text: 'Home', href: '/' },
+    { id: 1, text: 'Inicio', href: '/' },
     { id: 2, text: 'Servicios', href:'/servicios'},
     { id: 3, text: 'Producciones', href:'/producciones' },
-    // { id: 4, text: 'About' },
+    // { id: 4, text: 'Nosotros', href:'/nosotros' },
     { id: 5, text: '', html: theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />},
   ];
 
