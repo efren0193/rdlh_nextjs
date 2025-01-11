@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getAuth } from 'firebase-admin/auth';
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
-import serviceAccount from '@/utils/firebaseService';
+// import serviceAccount from '@/utils/firebaseService';
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 
 if(!getApps().length) {
     initializeApp({
