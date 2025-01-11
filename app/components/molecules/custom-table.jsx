@@ -54,8 +54,8 @@ export default function CustomTable({data, items, headers, table, limit, setLimi
                                 dark:bg-gray-700 dark:text-gray-400 border-gray-700">
                     <tr >
                         {
-                            headers.map((h) => {
-                                return <th scope="col" className="p-3">{h}</th>
+                            headers.map((h, i) => {
+                                return <th key={i} scope="col" className="p-3">{h}</th>
                             })
                         }
                         <th scope="col" className="p-3">Acciones</th>
@@ -77,7 +77,7 @@ export default function CustomTable({data, items, headers, table, limit, setLimi
                             dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600" key={w.id}>
                                 {
                                     items && items.map((item, index) => {
-                                        return <td className="p-3">{w[item]}</td>
+                                        return <td key={index} className="p-3">{w[item]}</td>
                                     })
                                 }
                                 <td className="p-3">
