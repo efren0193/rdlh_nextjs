@@ -3,14 +3,18 @@ import CustomLink from "@/app/components/atoms/custom-link";
 import WorkForm from "@/app/components/organisms/work-form";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { toast } from "sonner";
+
+var curr = new Date();
 
 export default function New() {
+    const {loading, setLoading} = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         shortDescription: '',
         description: '',
         type: 'work',
-        date: '',
+        date: curr.toISOString(),
         images: [],
         videos: [],
         audios: [],
@@ -34,8 +38,11 @@ export default function New() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submitting", formData);
-        // Lógica para guardar el nuevo ítem
+        if(formData.name.trim() == "" && 
+            (formData.images.length == 0 || formData.videos.length == 0)) {
+            toast.warning('Debes rellenar los campos importantes')
+            return;
+        }
     };
 
     return (
@@ -47,7 +54,8 @@ export default function New() {
             <WorkForm
                 work={formData}
                 handleInputChange={(e, b) => handleInputChange(e, b)}
-                handleSubmit={() => handleSubmit()}
+                handleSubmit={handleSubmit}
+                loading={loading}
             />
         </div>
     );

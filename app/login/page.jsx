@@ -19,6 +19,7 @@ export default function LoginPage() {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const token = await userCredential.user.getIdToken();
+            const refreshToken = userCredential.user.refreshToken;
 
             // Enviar el token al backend para almacenarlo en una cookie segura
             const res = await fetch('/api/set-token', {
@@ -26,7 +27,7 @@ export default function LoginPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ token }),
+                body: JSON.stringify({ token, refreshToken }),
             });
 
             if (res.ok) {

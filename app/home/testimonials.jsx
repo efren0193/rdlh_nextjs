@@ -1,4 +1,4 @@
-import { getTestimonials } from "../services"
+import { getTestimonios } from "../services/testimonials"
 import SvgComponent from "./svg-diagonal";
 import SvgDiagonal3 from "./svg-diagonal3";
 import TestimonialContent from "../components/testimonial-content";
@@ -6,7 +6,7 @@ import TestimonialContent from "../components/testimonial-content";
 
 async function Testimonials() {
 
-    const testimonials = await getTestimonials();
+    const testimonials = await getTestimonios();
     return (
         <div 
             className='bg-cover bg-center text-primary'

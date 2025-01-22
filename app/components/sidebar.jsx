@@ -1,9 +1,6 @@
-import { useState } from 'react';
-import { FiHome, FiSettings, FiLogOut, FiMessageCircle } from 'react-icons/fi';
+import { FiHome, FiLogOut, FiMessageCircle } from 'react-icons/fi';
 import { AiOutlineProject } from 'react-icons/ai';
 import Link from 'next/link';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase-client';
 
 export default function Sidebar({isOpen, setIsOpen}) {
 
@@ -16,6 +13,7 @@ export default function Sidebar({isOpen, setIsOpen}) {
             // Hacer la petición de logout al servidor para eliminar la cookie
             const response = await fetch('/api/logout', {
                 method: 'POST',
+                credentials: 'include',
             });
     
             if (response.ok) {

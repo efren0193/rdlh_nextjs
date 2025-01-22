@@ -1,6 +1,6 @@
 import Gallery from "@/app/components/gallery";
 import Slider from "@/app/components/slider"
-import { getTrabajos } from "@/app/services";
+import { getTrabajos } from "@/app/services/works";
 
 export default async function Trabajo({params}) {
 

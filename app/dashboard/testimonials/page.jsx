@@ -1,11 +1,11 @@
 'use client';
 import CustomLink from "@/app/components/atoms/custom-link";
 import CustomTable from "@/app/components/molecules/custom-table";
-import { getTrabajos } from "@/app/services"
+import { getTestimonials } from "@/app/services/testimonials"
 import { useEffect, useState } from "react";
 
-export default function Works() {
-    const [works, setWorks] = useState([]);
+export default function Testimonials() {
+    const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(false);
     const [limit,setLimit] = useState(10);
     const [lastDoc, setLastDoc] = useState(null);
@@ -13,8 +13,8 @@ export default function Works() {
 
     const loadInitialWorks = async (limit) => {
         setLoading(true);
-        const { newPosts, totalItems, lastVisible } = await getTrabajos(limit, null);
-        setWorks(newPosts);
+        const { newPosts, totalItems, lastVisible } = await getTestimonials(limit, null);
+        setTestimonials(newPosts);
         setTotal(totalItems);
         setLastDoc(lastVisible);
         setLoading(false);
@@ -31,22 +31,22 @@ export default function Works() {
     const fetchingMorePost = async() => {
         if (!lastDoc) return;
 
-        const { newPosts, lastVisible } = await getTrabajos(limit, lastDoc);
-        setWorks(newPosts);
+        const { newPosts, lastVisible } = await getTestimonials(limit, lastDoc);
+        setTestimonials(newPosts);
         setLastDoc(lastVisible);
     }
 
     return (
         <div className="m-4 p-8 shadow-xl rounded-lg">
             <div className="flex justify-between">
-                <h1 className="text-2xl font-semibold text-dark">Trabajos</h1>
-                <CustomLink href={`/dashboard/works/new`} text="Agregar nuevo"/>
+                <h1 className="text-2xl font-semibold text-dark">Testimonios</h1>
+                <CustomLink href={`/dashboard/testimonials/new`} text="Agregar nuevo"/>
             </div>
             <CustomTable 
-                data={works}
-                headers={['Nombre', 'Fecha','Imágenes', 'Videos']}
-                items={['name', 'date', 'images', 'videos']}
-                table="works"
+                data={testimonials}
+                headers={['Autor', 'Testimonio']}
+                items={['autor', 'testimonio']}
+                table="testimonials"
                 setLimit={(l) => setLimit(l)}
                 limit={limit}
                 total={total}

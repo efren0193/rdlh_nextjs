@@ -6,11 +6,11 @@ import CustomForm from "../molecules/custom-form";
 import ImageGallery from "./image-gallery";
 import VideoGallery from "./video-gallery";
 
-export default function WorkForm({work, handleSubmit, handleInputChange}) {
+export default function WorkForm({work, handleSubmit, handleInputChange, loading=false}) {
     return (
         <CustomForm onSubmit={() => handleSubmit()}>
             <CustomInput
-                label={'Nombre'}
+                label={'Nombre *'}
                 name={'name'}
                 value={work.name}
                 onChange={(e) => handleInputChange(e)}
@@ -60,7 +60,11 @@ export default function WorkForm({work, handleSubmit, handleInputChange}) {
                 <div className="w-full"></div>
             </div>
             <div className="w-full flex justify-center my-4">
-                <CustomButton onClick={handleSubmit} text={'Guardar'} />
+                <CustomButton 
+                    onClick={handleSubmit} 
+                    text={'Guardar'} 
+                    loading={loading}
+                />
             </div>
         </CustomForm>
     )

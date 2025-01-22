@@ -1,6 +1,6 @@
 import Card from "./molecules/card";
 import CustomLink from "./atoms/custom-link";
-import { getServicios } from "../services";
+import { getServicios } from "../services/services";
 
 
 async function Services({main=false}) {

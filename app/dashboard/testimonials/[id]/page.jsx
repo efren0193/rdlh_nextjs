@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getWork } from "@/app/services";
+import { getWork } from "@/app/services/services";
 import { useParams } from "next/navigation";
 import CustomLink from '@/app/components/atoms/custom-link';
 import { FaArrowLeft } from 'react-icons/fa';

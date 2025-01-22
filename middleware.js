@@ -29,6 +29,23 @@ export async function middleware(request) {
                 body: JSON.stringify({ token }),
             });
 
+            if (!verifyResponse.ok) {
+                // Si el token expiró, intenta refrescarlo
+                
+                const refreshResponse = await fetch(`${request.nextUrl.origin}/api/refresh-token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ refreshToken: request.cookies.get('refreshToken') }),
+                });
+    
+                if (!refreshResponse.ok) {
+                    throw new Error('Token refresh failed');
+                }
+            }
+
             const data = await verifyResponse.json();
             
             if (data.error) {

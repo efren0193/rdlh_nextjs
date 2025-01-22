@@ -1,15 +1,20 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getWork } from "@/app/services";
+import { getWork, updateWork } from "@/app/services/works";
 import { useParams } from "next/navigation";
 import CustomLink from '@/app/components/atoms/custom-link';
 import { FaArrowLeft } from 'react-icons/fa';
 import WorkForm from '@/app/components/organisms/work-form';
 import { PulseAnimation } from '@/app/components/atoms/pulse-animation';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function WorkEdit() {
     const { id } = useParams();
     const [loading, setLoading] = useState(true); 
+    const [loadingUpdate, setLoadingUpdate] = useState(false); 
+    const router = useRouter();
+
     const [work, setWork] = useState({
         name: '',
         shortDescription: '',
@@ -74,9 +79,17 @@ export default function WorkEdit() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log(work)
+        setLoadingUpdate(true);
+        const result = await updateWork(work, id);
+        if(result) {
+            router.push('/dashboard/works');
+            toast.success('Información actualizada con éxito.')
+            return;
+        }
+        toast.error('No se actualizó la información')
+        setLoadingUpdate(false);
     };
 
 
@@ -94,7 +107,8 @@ export default function WorkEdit() {
                         <WorkForm
                             work={work}
                             handleInputChange={(e, b) => handleInputChange(e, b)}
-                            handleSubmit={() => handleSubmit()}
+                            handleSubmit={handleSubmit}
+                            loading={loadingUpdate}
                         />
                     </>
                 )

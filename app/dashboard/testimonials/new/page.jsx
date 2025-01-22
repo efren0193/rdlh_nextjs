@@ -1,20 +1,14 @@
 'use client'
 import CustomLink from "@/app/components/atoms/custom-link";
-import WorkForm from "@/app/components/organisms/work-form";
+import TestimonialForm from "@/app/components/organisms/testimonial-form";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function New() {
     const [formData, setFormData] = useState({
-        name: '',
-        shortDescription: '',
-        description: '',
-        type: 'work',
+        autor: '',
+        testimonio: '',
         date: '',
-        images: [],
-        videos: [],
-        audios: [],
-        slug: ''
     });
 
     const handleInputChange = (e, object=true) => {
@@ -41,11 +35,11 @@ export default function New() {
     return (
         <div className="m-4 p-8 shadow-xl rounded-lg">
             <div className="flex items-center justify-between mb-4">
-                <CustomLink href={'/dashboard/works'} iconL={<FaArrowLeft size={'20'}/>}/>
-                <h1 className='text-2xl font-bold text-dark'>Agregar Nuevo Trabajo</h1>
+                <CustomLink href={'/dashboard/testimonials'} iconL={<FaArrowLeft size={'20'}/>}/>
+                <h1 className='text-2xl font-bold text-dark'>Agregar Nuevo Testimonio</h1>
             </div>
-            <WorkForm
-                work={formData}
+            <TestimonialForm
+                testimonial={formData}
                 handleInputChange={(e, b) => handleInputChange(e, b)}
                 handleSubmit={() => handleSubmit()}
             />

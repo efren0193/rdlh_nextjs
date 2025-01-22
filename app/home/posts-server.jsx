@@ -1,6 +1,6 @@
 import CustomLink from "../components/atoms/custom-link";
 import Card from "../components/molecules/card";
-import { getTrabajos } from "../services";
+import { getTrabajos } from "../services/works";
 
 
 async function PostsServer() {

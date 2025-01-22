@@ -1,6 +1,6 @@
 import Gallery from "@/app/components/gallery";
 import Slider from "@/app/components/slider"
-import { getServicio } from "@/app/services";
+import { getServicio } from "@/app/services/services";
 
 export default async function Servicio({params}) {
     const { id } = params;

@@ -23,7 +23,26 @@ export async function POST(request) {
 
         return NextResponse.json({ decodedToken });
     } catch (error) {
-        console.error('Error verifying token:', error);
-        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+        if (error.code === 'auth/id-token-expired') {
+            console.log('from verify-token', request.headers)
+            const refreshResponse = await fetch(`${request.nextUrl.origin}/api/refresh-token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ refreshToken: request.cookies.get('refreshToken') }),
+            });
+
+            if (refreshResponse.ok) {
+                // Si el token fue renovado, continúa con la solicitud
+                return NextResponse.next();
+            } else {
+                // Si no pudo renovar el token, redirige al login
+                return NextResponse.redirect(new URL('/login', request.url));
+            }
+        }
+        
+        return NextResponse.json({ error: error.code}, { status: 401 });
     }
 }

@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from "react";
-import { getTrabajos } from "../services";
+import { getTrabajos } from "../services/works";
 import CustomButton from "./atoms/custom-button";
 import Card from "./molecules/card";
 import { PulseAnimation } from "./atoms/pulse-animation";
