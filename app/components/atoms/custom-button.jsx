@@ -14,7 +14,7 @@ export default function CustomButton({text, iconL='', iconR='', onClick, loading
                     loading ? (
                         <span className="flex justify-between items-center text-white">
                             <svg class="animate-spin h-5 w-5 rounded-full border-t border-white mr-3" viewBox="0 0 24 24"></svg>
-                            Processing...
+                            Procesando...
                         </span>
                     ):(
                         <span className="flex justify-center items-center">

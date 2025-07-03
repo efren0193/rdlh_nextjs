@@ -1,8 +1,11 @@
 import { FiHome, FiLogOut, FiMessageCircle } from 'react-icons/fi';
 import { AiOutlineProject } from 'react-icons/ai';
 import Link from 'next/link';
+import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function Sidebar({isOpen, setIsOpen}) {
+    const [loading, setLoading] = useState(false);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -10,20 +13,22 @@ export default function Sidebar({isOpen, setIsOpen}) {
 
     const handleLogout = async () => {
         try {
-            // Hacer la petición de logout al servidor para eliminar la cookie
+            setLoading(true);
             const response = await fetch('/api/logout', {
                 method: 'POST',
                 credentials: 'include',
             });
     
             if (response.ok) {
-                // Redirigir al login después de hacer logout
                 window.location.href = '/login';
             } else {
+                setLoading(false);
                 console.error('Error al hacer logout');
             }
         } catch (error) {
+            setLoading(false);
             console.error('Error al cerrar sesión:', error);
+            toast.error('Error al cerrar sesión');
         }
     };
 

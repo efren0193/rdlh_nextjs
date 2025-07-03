@@ -1,4 +1,4 @@
-export default function CustomInput({ label, name, value, type = 'text', onChange, disabled=false }) {
+export default function CustomInput({ label, name, value, type = 'text', onChange, disabled=false, placeholder='' }) {
     
     return (
       <div className="mb-4 w-full">
@@ -6,7 +6,7 @@ export default function CustomInput({ label, name, value, type = 'text', onChang
         {type === 'textarea' ? (
           <textarea
             name={name}
-            className="rounded-lg  w-full border border-gray-300 shadow-md p-2 text-dark"
+            className="rounded-lg  w-full border border-gray-300 shadow-md p-2 text-dark dark:text-white"
             value={value}
             onChange={onChange}
             rows={3}
@@ -15,10 +15,11 @@ export default function CustomInput({ label, name, value, type = 'text', onChang
           <input
             type={type}
             name={name}
-            className="rounded-lg h-10 w-full border border-gray-300 shadow-md p-2 text-dark"
+            className="rounded-lg h-10 w-full border border-gray-300 shadow-md p-2 text-dark dark:text-white"
             value={value}
             onChange={onChange}
             disabled={disabled}
+            placeholder={placeholder}
           />
         )}
       </div>
