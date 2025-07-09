@@ -8,7 +8,7 @@ import { MdBrightness2, MdBrightness7 } from "react-icons/md";
 import Link from 'next/link';
 
 
-const Navbar = () => {
+const Navbar = ({servicios}) => {
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
   const [top, setTop] = useState(false);
@@ -52,7 +52,13 @@ const Navbar = () => {
   // Array containing navigation items
   const navItems = [
     { id: 1, text: 'Inicio', href: '/' },
-    { id: 2, text: 'Servicios', href:'/servicios'},
+    { id: 2, text: 'Servicios', href:'/servicios', 
+      submenu: servicios.map(s => ({
+        id: s.id,
+        href: `/servicios/${s.slug}`,
+        name: s.name
+      }))
+    },
     { id: 3, text: 'Producciones', href:'/producciones' },
     // { id: 4, text: 'Nosotros', href:'/nosotros' },
     { id: 5, text: '', html: theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />},
@@ -73,20 +79,45 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <ul className='hidden md:flex'>
-                {navItems.map(item => (
+              {navItems.map(item => (
                 <li
-                    key={item.id}
-                    className='p-4 hover:text-secondary rounded-xl m-2 cursor-pointer duration-300 flex items-center'
+                  key={item.id}
+                  className={`p-4 hover:text-secondary rounded-xl m-2 cursor-pointer duration-300 flex items-center ${
+                    item.submenu ? 'group relative' : ''
+                  }`}
                 >
-                  {item.text ?
-                    <Link href={item.href}>
+                  {item.text ? (
+                    <Link href={item.href} className="flex items-center">
                       {item.text}
+                      {item.submenu && (
+                        <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      )}
                     </Link>
-                  :
-                  item.html
-                  }
+                  ) : (
+                    item.html
+                  )}
+                  
+                  {/* Submenú */}
+                  {item.submenu && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2 top-full hidden group-hover:block bg-light dark:bg-black shadow-xl rounded-md min-w-[250px] z-50 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+                      <ul className="py-2">
+                        {item.submenu.map(subItem => (
+                          <li key={subItem.id} className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                            <Link 
+                              href={subItem.href} 
+                              className="block w-full text-dark dark:text-primary hover:text-secondary dark:hover:text-secondary transition-colors"
+                            >
+                              {subItem.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </li>
-                ))}
+              ))}
             </ul>
 
             {/* Mobile Navigation Icon */}

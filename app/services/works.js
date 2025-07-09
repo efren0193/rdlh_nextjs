@@ -10,19 +10,31 @@ import {
     getDoc, 
     doc, 
     getCountFromServer,
-    addDoc, 
+    startAt, 
+    endAt,
     updateDoc
 } from "firebase/firestore";
 
 
-export const getTrabajos = async (limitAmount = 3, lastVisibleDoc = null) => {
+export const getTrabajos = async (limitAmount = 3, lastVisibleDoc = null, searchTerm = '') => {
     try {
         let q = query(
             collection(db, "trabajos"),
             where('type', '==', 'work'),
-            orderBy('date', 'desc'),
-            limit(limitAmount)
+            orderBy('date', 'desc')
         );
+
+        // Aplicar filtro de búsqueda si existe
+        if (searchTerm) {
+            q = query(
+                q,
+                startAt(searchTerm.toLowerCase()),
+                endAt(searchTerm.toLowerCase() + '\uf8ff') // Carácter Unicode para fin de cadena
+            );
+        }
+
+        // Paginación
+        q = query(q, limit(limitAmount));
     
         if (lastVisibleDoc) {
             q = query(q, startAfter(lastVisibleDoc));

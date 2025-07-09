@@ -10,6 +10,14 @@ export const getServicios = async(main) =>{
     return data;
 }
 
+export const getServiciosForMenu = async() => {
+    const res = await getDocs(collection(db, 'servicios'));
+    const data = [];
+
+    res.forEach((doc) => data.push({id: doc.id, ...doc.data()}))
+    return data;
+}
+
 export const getServicio = async (params) => {
     const q = query(collection(db, 'servicios'), where('slug','==', params));
     const snapshot = await getDocs(q);

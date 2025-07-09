@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase-client";
-import { collection, getDocs, query, limit, orderBy, startAfter, getCountFromServer } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, query, limit, orderBy, startAfter, getCountFromServer } from "firebase/firestore";
 
 export const getTestimonios = async () => {
     const q = query(collection(db, "testimonios"));
@@ -43,3 +43,14 @@ export const getTestimonials = async (limitAmount = 3, lastVisibleDoc = null) =>
 
     return { newPosts, lastVisible, totalItems};
 };
+
+export const getTestimonial = async(id) => {
+    const q = doc(db, "testimonios", id);
+    const docSnap = await getDoc(q);
+
+    if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() };
+    } else {
+        return null;
+    }
+}

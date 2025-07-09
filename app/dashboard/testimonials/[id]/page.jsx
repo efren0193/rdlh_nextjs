@@ -1,82 +1,43 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getWork } from "@/app/services/services";
+import { getTestimonial } from "@/app/services/testimonials";
 import { useParams } from "next/navigation";
 import CustomLink from '@/app/components/atoms/custom-link';
 import { FaArrowLeft } from 'react-icons/fa';
-import WorkForm from '@/app/components/organisms/work-form';
+import TestimonialForm from '@/app/components/organisms/testimonial-form';
 import { PulseAnimation } from '@/app/components/atoms/pulse-animation';
 
-export default function WorkEdit() {
+export default function TestimonialEdit() {
     const { id } = useParams();
     const [loading, setLoading] = useState(true); 
-    const [work, setWork] = useState({
-        name: '',
-        shortDescription: '',
-        description: '',
-        type: 'work',
-        date: '',
-        images: [],
-        videos: [],
-        audios: [],
-        slug: ''
+    const [testimonial, setTestimonial] = useState({
+        autor: '',
+        testimonio: '',
+        date: ''
     });
 
     
     useEffect(() => {
-        const fetchWork = async () => {
+        const fetchTestimonial = async () => {
             setLoading(true); 
-            const workData = await getWork(id); 
-            setWork(workData); 
+            const testimonialData = await getTestimonial(id); 
+            setTestimonial(testimonialData); 
             setLoading(false); 
         };
 
         if (id) {
-            fetchWork(); 
+            fetchTestimonial(); 
         }
     }, [id]);
 
-    const generateSlug = (v) => {
-        return v
-            .toString()                     
-            .toLowerCase()                  
-            .trim()                         
-            .normalize('NFD')               
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9 -]/g, '')    
-            .replace(/\s+/g, '-')           
-            .replace(/-+/g, '-');
-    }
-
-    const handleInputChange = (e, object=true) => {
-        let name, value, slug;
-        if(object) {
+    const handleInputChange = (e) => {
+        let name, value;
             ({ name, value } = e.target);
-            if(name === 'name') {
-                slug = generateSlug(value);
-            }
-        }else{
-            name = 'description';
-            value = e
-        }
-
-        if(name === 'name') {
-            setWork({
-                ...work,
-                'name': value,
-                'slug': slug
-            });
-        }else {
-            setWork({
-                ...work,
+           
+            setTestimonial({
+                ...testimonial,
                 [name]: value,
             }); 
-        }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(work)
     };
 
 
@@ -88,12 +49,12 @@ export default function WorkEdit() {
                 (
                     <>
                         <div className="flex items-center justify-between mb-4">
-                            <CustomLink href={'/dashboard/works'} iconL={<FaArrowLeft size={'20'}/>}/>
-                            <h1 className='text-2xl font-bold text-dark'>Editar {work.name}</h1>
+                            <CustomLink href={'/dashboard/testimonials'} iconL={<FaArrowLeft size={'20'}/>}/>
+                            <h1 className='text-2xl font-bold text-dark'>Testimonio de {testimonial.autor}</h1>
                         </div>
-                        <WorkForm
-                            work={work}
-                            handleInputChange={(e, b) => handleInputChange(e, b)}
+                        <TestimonialForm
+                            testimonial={testimonial}
+                            handleInputChange={(e) => handleInputChange(e)}
                             handleSubmit={() => handleSubmit()}
                         />
                     </>
