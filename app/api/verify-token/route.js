@@ -25,14 +25,14 @@ export async function POST(request) {
     } catch (error) {
         if (error.code === 'auth/id-token-expired') {
             console.log('from verify-token', request)
-            // const refreshResponse = await fetch(`${request.nextUrl.origin}/api/refresh-token`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     credentials: 'include',
-            //     body: JSON.stringify({ refreshToken: request.cookies.get('refreshToken') }),
-            // });
+            const refreshResponse = await fetch(`${request.headers.host}/api/refresh-token`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ refreshToken: request.cookies.get('refreshToken') }),
+            });
 
             if (refreshResponse.ok) {
                 // Si el token fue renovado, continúa con la solicitud
