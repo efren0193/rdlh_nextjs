@@ -15,7 +15,9 @@ export default function Card({image, name, description='', type, slug}){
         }
     }, [type, image])
 
-    return <div className="max-w-md w-80 border bg-gradient-to-b from-white via-white to-darkSecondary dark:from-dark dark:via-dark dark:to-secondaryDark border-gray-200 rounded-lg shadow-md hover:shadow-lg dark:bg-opacity-15 dark:border-gray-700">
+    return <div className="max-w-md w-80 border bg-gradient-to-b from-white via-white to-darkSecondary 
+        dark:from-dark dark:via-dark dark:to-secondaryDark border-gray-200 rounded-lg shadow-md hover:shadow-lg 
+        dark:bg-opacity-15 dark:border-gray-700">
         {type === 'image' ? <Link href={slug}>
             <div className={`h-40 w-full bg-cover bg-center rounded-t-lg`} style={{backgroundImage: `url(${cardType})`}} ></div>
         </Link>

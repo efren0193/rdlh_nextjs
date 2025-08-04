@@ -82,12 +82,15 @@ const Navbar = ({servicios}) => {
               {navItems.map(item => (
                 <li
                   key={item.id}
-                  className={`p-4 hover:text-secondary rounded-xl m-2 cursor-pointer duration-300 flex items-center ${
+                  className={`p-4 dark:hover:text-primary hover:text-secondaryDark  rounded-xl m-2 cursor-pointer flex items-center ${
                     item.submenu ? 'group relative' : ''
                   }`}
                 >
                   {item.text ? (
-                    <Link href={item.href} className="flex items-center">
+                    <Link href={item.href} className="flex items-center
+                    hover:border-b dark:hover:border-primary 
+                      hover:border-secondary transition-all duration-200
+                    ">
                       {item.text}
                       {item.submenu && (
                         <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -101,13 +104,17 @@ const Navbar = ({servicios}) => {
                   
                   {/* Submenú */}
                   {item.submenu && (
-                    <div className="absolute left-1/2 transform -translate-x-1/2 top-full hidden group-hover:block bg-light dark:bg-black shadow-xl rounded-md min-w-[250px] z-50 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+                    <div className={`absolute left-1/2 transform -translate-x-1/2 top-full hidden group-hover:block 
+                    bg-light dark:bg-black shadow-xl rounded-md min-w-[250px] z-50 
+                    transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0`}>
                       <ul className="py-2">
                         {item.submenu.map(subItem => (
                           <li key={subItem.id} className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 last:border-0">
                             <Link 
                               href={subItem.href} 
-                              className="block w-full text-dark dark:text-primary hover:text-secondary dark:hover:text-secondary transition-colors"
+                              className="block w-full 
+                               dark:hover:text-primary hover:border-b dark:hover:border-primary 
+                              hover:border-secondary hover:text-secondaryDark transition-all duration-200"
                             >
                               {subItem.name}
                             </Link>
