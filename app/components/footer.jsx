@@ -34,7 +34,7 @@ export default function Footer() {
                     <FaTiktok size={'30'} />
                 </Link>
 
-                <Link href={'https://api.whatsapp.com/send?phone=4831092074'} target="_blank">
+                <Link href={'https://api.whatsapp.com/send?phone=4831307407'} target="_blank">
                     <FaWhatsapp size={'30'} />
                 </Link>
             </div>
