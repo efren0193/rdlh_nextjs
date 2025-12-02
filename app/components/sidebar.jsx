@@ -1,5 +1,8 @@
 import { FiHome, FiLogOut, FiMessageCircle } from 'react-icons/fi';
 import { AiOutlineProject } from 'react-icons/ai';
+import { PiIdentificationCardBold } from "react-icons/pi";
+import { RiHandCoinLine } from "react-icons/ri";
+
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { useState } from 'react';
@@ -53,9 +56,21 @@ export default function Sidebar({isOpen, setIsOpen}) {
                         </Link>
                     </li>
                     <li className="p-4 hover:bg-dark cursor-pointer">
+                        <Link href={'/dashboard/services'} className='flex items-center'>
+                            <RiHandCoinLine className="text-xl" />
+                            {isOpen && <span className="ml-4">Servicios</span>}
+                        </Link>
+                    </li>
+                     <li className="p-4 hover:bg-dark cursor-pointer">
                         <Link href={'/dashboard/works'} className='flex items-center'>
                             <AiOutlineProject className="text-xl" />
-                            {isOpen && <span className="ml-4">Trabajos</span>}
+                            {isOpen && <span className="ml-4">Producciones</span>}
+                        </Link>
+                    </li>
+                     <li className="p-4 hover:bg-dark cursor-pointer">
+                        <Link href={'/dashboard/invitations'} className='flex items-center'>
+                            <PiIdentificationCardBold className="text-xl" />
+                            {isOpen && <span className="ml-4">Invitaciones</span>}
                         </Link>
                     </li>
                     <li className="p-4 hover:bg-dark cursor-pointer">

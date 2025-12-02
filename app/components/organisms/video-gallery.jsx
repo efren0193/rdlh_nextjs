@@ -6,7 +6,7 @@ export default function VideoGallery({ videos }) {
       <div className="my-8">
         <label className="block mb-2 font-bold text-gray-700">Videos</label>
         <div className="dashboard-gallery grid grid-cols-[repeat(auto-fill,minmax(200px,2fr))] gap-4">
-          {videos.map((vid, i) => (
+          {videos?.map((vid, i) => (
             <YouTubeEmbed videoid={vid} key={i}  className="shadow-md"/>
           ))}
           <div className="relative border flex justify-center items-center 

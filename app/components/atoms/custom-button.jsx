@@ -1,6 +1,9 @@
-export default function CustomButton({text, iconL='', iconR='', onClick, loading=false}) {
+import CustomSpin from "./custom-spin";
+
+export default function CustomButton({type='button', text, iconL='', iconR='', onClick, loading=false}) {
     return (
         <button 
+            type={type}
             className="bg-gradient-to-r 
             from-dark via-secondaryDark to-secondaryDark 
             dark:from-dark dark:to-gray-500
@@ -12,10 +15,7 @@ export default function CustomButton({text, iconL='', iconR='', onClick, loading
             <div className="flex justify-center items-center ">
                 {
                     loading ? (
-                        <span className="flex justify-between items-center text-white">
-                            <svg class="animate-spin h-5 w-5 rounded-full border-t border-white mr-3" viewBox="0 0 24 24"></svg>
-                            Procesando...
-                        </span>
+                        <CustomSpin/>
                     ):(
                         <span className="flex justify-center items-center">
                             {iconL}&nbsp;{text}&nbsp;{iconR}

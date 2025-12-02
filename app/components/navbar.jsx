@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect} from 'react';
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { CldImage } from 'next-cloudinary';
@@ -14,6 +15,8 @@ const Navbar = ({servicios}) => {
   const [top, setTop] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  if(pathname.startsWith('/invitaciones'))return null;
 
   // Toggle function to handle the navbar's display
   const handleNav = () => {

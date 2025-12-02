@@ -50,7 +50,7 @@ export default function LightboxModal({ isOpen, onRequestClose, imageUrl, showPr
       <div className="relative flex justify-center items-center h-full max-h-full">
         {
           !imageUrl ? 
-          <div class="animate-spin text-white">
+          <div className="animate-spin text-white">
             <AiOutlineLoading3Quarters size={'30'}/>
           </div>
           :

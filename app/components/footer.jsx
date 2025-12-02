@@ -1,10 +1,15 @@
 'use client'
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation";
 import { MdFacebook } from "react-icons/md";
 import { FaYoutube, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa'
 import Link from "next/link";
 
 export default function Footer() {
+
+    const pathname = usePathname();
+    if(pathname.startsWith('/invitaciones'))return null;
+
     const [year, setYear] = useState(0);
 
     useEffect(() => {

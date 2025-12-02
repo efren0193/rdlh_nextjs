@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+* {
+  @apply box-border;
+}
+
 .hide-scroll-bar {
   -ms-overflow-style: none;
   scrollbar-width: none;

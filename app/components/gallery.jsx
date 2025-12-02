@@ -2,8 +2,7 @@
 import { useState } from "react";
 import LightboxModal from "./molecules/lightbox-modal";
 
-export default function Gallery({ servicioResponse }) {
-    const { images } = servicioResponse;
+export default function Gallery({ images = [] }) {
     const imageCount = images.length;
 
     const [isModalOpen, setIsModalOpen] = useState(false);

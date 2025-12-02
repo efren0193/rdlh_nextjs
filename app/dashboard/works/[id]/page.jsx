@@ -1,17 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { getWork, updateWork } from "@/app/services/works";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import CustomLink from '@/app/components/atoms/custom-link';
 import { FaArrowLeft } from 'react-icons/fa';
 import WorkForm from '@/app/components/organisms/work-form';
 import { PulseAnimation } from '@/app/components/atoms/pulse-animation';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { slugify } from '@/utils/functions';
 
 export default function WorkEdit() {
     const { id } = useParams();
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(false); 
     const [loadingUpdate, setLoadingUpdate] = useState(false); 
     const router = useRouter();
 
@@ -41,24 +41,13 @@ export default function WorkEdit() {
         }
     }, [id]);
 
-    const generateSlug = (v) => {
-        return v
-            .toString()                     
-            .toLowerCase()                  
-            .trim()                         
-            .normalize('NFD')               
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9 -]/g, '')    
-            .replace(/\s+/g, '-')           
-            .replace(/-+/g, '-');
-    }
 
     const handleInputChange = (e, object=true) => {
         let name, value, slug;
         if(object) {
             ({ name, value } = e.target);
             if(name === 'name') {
-                slug = generateSlug(value);
+                slug = slugify(value);
             }
         }else{
             name = 'description';

@@ -10,80 +10,44 @@ import {
     getDoc, 
     doc, 
     getCountFromServer,
-    startAt, 
-    endAt,
     updateDoc
 } from "firebase/firestore";
 
+const trabajosCollection = collection(db, "trabajos");
 
-export const getTrabajos = async (limitAmount = 3, lastVisibleDoc = null, searchTerm = '') => {
+export const getTrabajos = async (limitAmount = 10, cursor=null) => {
     try {
         let q = query(
-            collection(db, "trabajos"),
+            trabajosCollection,
             where('type', '==', 'work'),
-            orderBy('date', 'desc')
+            orderBy('date', 'desc'),
+            limit(limitAmount)
         );
 
-        // Aplicar filtro de búsqueda si existe
-        if (searchTerm) {
-            q = query(
-                q,
-                startAt(searchTerm.toLowerCase()),
-                endAt(searchTerm.toLowerCase() + '\uf8ff') // Carácter Unicode para fin de cadena
-            );
+        if (cursor) {
+            q = query(q, startAfter(cursor));
         }
-
-        // Paginación
-        q = query(q, limit(limitAmount));
-    
-        if (lastVisibleDoc) {
-            q = query(q, startAfter(lastVisibleDoc));
-        }
-    
         const snapshot = await getDocs(q);
-        if (snapshot.empty) {
-            return { newPosts: [], lastVisible: null, totalItems: 0 };
-        }
-        
+
         const newPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const lastVisible = snapshot.docs[snapshot.docs.length - 1];
-    
-        const totalQuery = query(
-            collection(db, "trabajos"),
+        const lastVisible = snapshot.docs[snapshot.docs.length - 1] ?? null;
+
+        const totalSnap = await getCountFromServer(query(
+            trabajosCollection,
             where('type', '==', 'work')
-        );
-    
-        const totalSnap = await getCountFromServer(totalQuery);
-        const totalItems = totalSnap.data().count;
-    
-        return { newPosts, lastVisible, totalItems};
+        ));
+        
+        return {
+            newPosts,
+            lastVisible,
+            totalItems: totalSnap.data().count
+        };
+
     } catch (error) {
         console.log(error)
         return { newPosts: [], lastVisible: null, totalItems: 0};
     }
 };
-
-export const offsetWorks = async(pageNumber, limit, lastVisibleDoc=null) => {
-    try {
-        const offset = (pageNumber - 1) * limit;
-        let tempVisibleDocs = lastVisibleDoc;
-        if(offset > 0) {
-            const initialQuery = query(
-                collection(db, "trabajos"),
-                where('type', '==', 'work'),
-                orderBy('date', 'desc'),
-                limit(offset)
-            );
-            const snapshot = await getDocs(initialQuery);
-            console.log('snapshot', snapshot)
-            tempVisibleDocs = snapshot.docs[snapshot.docs.length - 1];
-        }
-        return tempVisibleDocs;
-    } catch (error) {
-        console.log(error)
-        return { newPosts: [], lastVisible: null, totalItems: 0};
-    }
-}
 
 export const getWork = async(id) => {
     const q = doc(db, "trabajos", id);
@@ -114,5 +78,21 @@ export const updateWork = async(payload, id) => {
     } catch (error) {
         console.log(error)
         return false;
+    }
+}
+
+// Get trabajo by slug
+export const getTrabajoBySlug = async (slug) => {
+    try {
+        const q = query(trabajosCollection, where('slug','==', slug));
+        const snapshot = await getDocs(q);
+
+        if(snapshot.empty) {
+            return null;
+        }
+        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+    } catch (error) {
+        console.log(error);
+        return null;
     }
 }

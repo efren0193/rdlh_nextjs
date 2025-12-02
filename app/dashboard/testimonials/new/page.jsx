@@ -41,7 +41,7 @@ export default function New() {
             <TestimonialForm
                 testimonial={formData}
                 handleInputChange={(e, b) => handleInputChange(e, b)}
-                handleSubmit={() => handleSubmit()}
+                handleSubmit={(e) => handleSubmit(e)}
             />
         </div>
     );

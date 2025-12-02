@@ -1,67 +1,66 @@
-'use client';
+'use client'
+import { useEffect, useState } from "react";
+import { getTrabajos } from "@/app/services/works";
 import CustomLink from "@/app/components/atoms/custom-link";
 import CustomTable from "@/app/components/molecules/custom-table";
-import { getTrabajos, offsetWorks } from "@/app/services/works"
-import { useEffect, useState } from "react";
 
 export default function Works() {
     const [works, setWorks] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [limit,setLimit] = useState(10);
-    const [lastDoc, setLastDoc] = useState(null);
+    const [limit, setLimit] = useState(10);
     const [total, setTotal] = useState(0);
+
     const [currentPage, setCurrentPage] = useState(1);
+    const [pageCursors, setPageCursors] = useState([null]); 
+    // pageCursors[page] = cursor
 
-    useEffect(() => {
-        const loadInitialWorks = async () => {
-            setLoading(true);
-            const { newPosts, totalItems, lastVisible } = await getTrabajos(limit, null);
-            setWorks(newPosts);
-            setTotal(totalItems);
-            setLastDoc(lastVisible);
-            setLoading(false);
-        }
-        loadInitialWorks(limit);
-    }, [limit]);
-
-    // useEffect(() => {
-    //     fetchingMorePost()
-    // }, [])
-
-    const fetchingMorePost = async (pageNumber) => {
-        // if (pageNumber === currentPage || loading) return;
-        if(!lastDoc) return
-    
+    const loadPage = async (page) => {
         setLoading(true);
-        const { newPosts, lastVisible } = await getTrabajos(limit, lastDoc);
-        let tempWorks = await offsetWorks(pageNumber, currentPage, lastVisible);
+
+        const cursor = pageCursors[page - 1] ?? null;
+
+        const { newPosts, lastVisible, totalItems } = await getTrabajos(limit, cursor);
 
         setWorks(newPosts);
+        setTotal(totalItems);
+        setCurrentPage(page);
 
-        setLastDoc(lastVisible);
-        setCurrentPage(pageNumber);
+        // Guardamos cursor de esta página
+        if (lastVisible && !pageCursors[page]) {
+            setPageCursors(prev => {
+                const newArr = [...prev];
+                newArr[page] = lastVisible;
+                return newArr;
+            });
+        }
+
         setLoading(false);
     };
+
+    useEffect(() => {
+        loadPage(1);
+    }, [limit]);
 
     return (
         <div className="m-4 p-8 shadow-xl rounded-lg">
             <div className="flex justify-between">
                 <h1 className="text-2xl font-semibold text-dark">Trabajos</h1>
-                <CustomLink href={`/dashboard/works/new`} text="Agregar nuevo"/>
+                <CustomLink href={`/dashboard/works/new`} text="Agregar nuevo" />
             </div>
-            <CustomTable 
+
+            <CustomTable
                 data={works}
                 headers={['Nombre', 'Fecha','Imágenes', 'Videos']}
                 items={['name', 'date', 'images', 'videos']}
                 table="works"
-                setLimit={(l) => setLimit(l)}
+                tablename="Producciones"
+                setLimit={setLimit}
                 limit={limit}
                 total={total}
                 loading={loading}
-                fetchPageData={() => fetchingMorePost()}
-            >
-
-            </CustomTable>
+                currentPage={currentPage}
+                fetchPageData={loadPage}
+            />
         </div>
-    )
+    );
 }

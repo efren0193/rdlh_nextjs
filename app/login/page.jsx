@@ -59,7 +59,7 @@ export default function LoginPage() {
         <div className='dark:bg-dark bg-light pb-2'>
             <Slider title={'Login'} />
             <div className='w-full p-2 md:p-0 md:w-1/2 lg:1/3 m-auto bg-white shadow-lg'>
-                <CustomForm>
+                <CustomForm onSubmit={handleLogin}>
                     <label className="block mb-2 text-red-600">{error}</label>
                     <CustomInput
                         label={'Email'}
@@ -89,7 +89,7 @@ export default function LoginPage() {
                         </span>
                     </div>
                     <div className="w-full flex justify-end my-4">
-                        <CustomButton onClick={handleLogin} text={'Iniciar Sesión'} loading={loading}/>
+                        <CustomButton type='submit' text={'Iniciar Sesión'} loading={loading}/>
                     </div>
                 </CustomForm>
             </div>

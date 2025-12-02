@@ -7,7 +7,6 @@ export function useAuth() {
             if (auth.currentUser) {
                 try {
                     const idToken = await auth.currentUser.getIdToken(true);
-                    console.log('await auth.currentUser', auth.currentUser)
                     await fetch('/api/set-token', {
                         method: 'POST',
                         body: JSON.stringify({ token: idToken }),

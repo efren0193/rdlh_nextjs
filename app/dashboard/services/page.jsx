@@ -1,26 +1,26 @@
 'use client';
 import CustomLink from "@/app/components/atoms/custom-link";
 import CustomTable from "@/app/components/molecules/custom-table";
-import { getTestimonials } from "@/app/services/testimonials"
+import { getServices } from "@/app/services/services"
 import { useEffect, useState } from "react";
 
-export default function Testimonials() {
-    const [testimonials, setTestimonials] = useState([]);
+export default function Services() {
+    const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [limit,setLimit] = useState(10);
     const [total, setTotal] = useState(0);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageCursors, setPageCursors] = useState([null]); 
+    const [pageCursors, setPageCursors] = useState([null]);
 
     const loadPage = async (page) => {
         setLoading(true);
 
         const cursor = pageCursors[page - 1] ?? null;
 
-        const { newPosts, lastVisible, totalItems } = await getTestimonials(limit, cursor);
+        const { newPosts, lastVisible, totalItems } = await getServices(limit, cursor);
 
-        setTestimonials(newPosts);
+        setServices(newPosts);
         setTotal(totalItems);
         setCurrentPage(page);
 
@@ -43,24 +43,22 @@ export default function Testimonials() {
     return (
         <div className="m-4 p-8 shadow-xl rounded-lg">
             <div className="flex justify-between">
-                <h1 className="text-2xl font-semibold text-dark">Testimonios</h1>
-                <CustomLink href={`/dashboard/testimonials/new`} text="Agregar nuevo"/>
+                <h1 className="text-2xl font-semibold text-dark">Servicios</h1>
+                <CustomLink href={`/dashboard/services/new`} text="Agregar Nuevo Servicio"/>
             </div>
             <CustomTable 
-                data={testimonials}
-                headers={['Autor', 'Testimonio']}
-                items={['autor', 'testimonio']}
-                table="testimonials"
-                tablename="Testimonios"
+                data={services}
+                headers={['Nombre', 'Fecha','Imágenes', 'Videos']}
+                items={['name', 'date', 'images', 'videos']}
+                table="services"
+                tablename="Servicios"
                 setLimit={setLimit}
                 limit={limit}
                 total={total}
                 loading={loading}
                 currentPage={currentPage}
-                fetchPageData={() => loadPage}
-            >
-
-            </CustomTable>
+                fetchPageData={loadPage}
+            />
         </div>
     )
 }

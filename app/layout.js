@@ -1,8 +1,8 @@
-import Nabvar from "./components/navbar"
 import { ThemeProvider } from "next-themes";
 import '../globals.css'
-import Footer from "./components/footer";
 import { getServiciosForMenu } from "./services/services";
+import NabvarServer from "./components/navbar-server";
+import Footer from "./components/footer";
 
 export const metadata = {
   title: 'Rincón de la Huasteca',
@@ -14,13 +14,12 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const getServices = await getServiciosForMenu();
-  
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class">
-          <Nabvar servicios={getServices}/>
-          {children}
+          <NabvarServer servicios={getServices} />
+            {children}
           <Footer/>
         </ThemeProvider>
       </body>

@@ -19,6 +19,7 @@ async function Services({main=false}) {
                                 image={service.images[0]}
                                 name={service.name}
                                 slug={`/servicios/${service.slug}`}
+                                description={service.shortDescription}
                             ></Card>
                         </div>
                     })}

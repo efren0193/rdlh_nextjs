@@ -1,8 +1,10 @@
 import { db } from "@/lib/firebase-client";
 import { collection, doc, getDocs, getDoc, query, limit, orderBy, startAfter, getCountFromServer } from "firebase/firestore";
 
+const testimonialsRef = collection(db, "testimonios");
+// QUERY FOR HOME PAGE SERVICES LISTING
 export const getTestimonios = async () => {
-    const q = query(collection(db, "testimonios"));
+    const q = query(testimonialsRef);
     const servRef = await getDocs(q);
     const data = [];
 
@@ -10,38 +12,37 @@ export const getTestimonios = async () => {
     return data;
 }
 
-export const getTestimonials = async (limitAmount = 3, lastVisibleDoc = null) => {
-    let q;
-    if (lastVisibleDoc) {
-        q = query(
-            collection(db, "testimonios"),
-            orderBy('date', 'desc'),
-            limit(limitAmount),
-            startAfter(lastVisibleDoc)
-        );
-    } else {
-        q = query(
-            collection(db, "testimonios"),
+//QUERY FOR DASHBOARD SERVICES LISTING WITH PAGINATION
+export const getTestimonials = async (limitAmount = 10, cursor=null) => {
+    try {
+        let q = query(
+            testimonialsRef,
             orderBy('date', 'desc'),
             limit(limitAmount)
         );
+
+        if (cursor) {
+            q = query(q, startAfter(cursor));
+        }
+        const snapshot = await getDocs(q);
+
+        const newPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const lastVisible = snapshot.docs[snapshot.docs.length - 1] ?? null;
+
+        const totalSnap = await getCountFromServer(query(
+            testimonialsRef
+        ));
+        
+        return {
+            newPosts,
+            lastVisible,
+            totalItems: totalSnap.data().count
+        };
+
+    } catch (error) {
+        console.log(error)
+        return { newPosts: [], lastVisible: null, totalItems: 0};
     }
-
-    const servRef = await getDocs(q);
-    const newPosts = [];
-    servRef.forEach((doc) => newPosts.push({ id: doc.id, ...doc.data() }));
-
-    const lastVisible = servRef.docs[servRef.docs.length - 1]; 
-
-    const totalQuery = query(
-        collection(db, "testimonios"),
-        orderBy('date', 'desc')
-    );
-
-    const totalSnap = await getCountFromServer(totalQuery);
-    const totalItems = totalSnap.data().count;
-
-    return { newPosts, lastVisible, totalItems};
 };
 
 export const getTestimonial = async(id) => {

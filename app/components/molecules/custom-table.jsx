@@ -8,52 +8,77 @@ export default function CustomTable({
   items,
   headers,
   table,
+  tablename = 'Proyectos',
   limit,
   setLimit,
-  total,
-  loading,
-  fetchPageData,
-  currentPage,
+  total = 0,
+  loading = false,
+  fetchPageData,       // función (pageNumber) => Promise
+  currentPage = 1      // debe venir del padre
 }) {
-  const [perPage, setPerPage] = useState(limit);
+  const [perPage, setPerPage] = useState(limit || 10);
   const [pages, setPages] = useState(0);
 
-  // 🔄 Calcular el número de páginas
+  // recalcula páginas cuando cambian total o perPage
   useEffect(() => {
-    setPages(Math.ceil(total / perPage));
+    const p = perPage > 0 ? Math.max(0, Math.ceil(total / perPage)) : 0;
+    setPages(p);
   }, [total, perPage]);
 
-  // 📋 Cambiar el número de elementos por página
+  // sincroniza perPage cuando cambia limit desde el padre
+  useEffect(() => {
+    if (limit && limit !== perPage) setPerPage(limit);
+  }, [limit]);
+
+  // Cambiar el número de elementos por página
   const handlePerPage = (e) => {
     const newLimit = Number(e.target.value);
     setPerPage(newLimit);
-    setLimit(newLimit);
+    setLimit(newLimit); // notifica al padre para recargar la página 1
+    // opcional: pedir a padre cargar la página 1 inmediatamente
+    if (fetchPageData) fetchPageData(1);
   };
 
-  // 📋 Cambiar de página
+  // Cambiar de página
   const handlePageClick = async (e, pageNumber) => {
-    e.preventDefault();
-    if (pageNumber !== currentPage) {
-      await fetchPageData(pageNumber);
-    }
+    e && e.preventDefault && e.preventDefault();
+
+    // protección: valid range
+    if (!fetchPageData) return;
+    if (pageNumber < 1) return;
+    if (pages > 0 && pageNumber > pages) return;
+    if (pageNumber === currentPage) return;
+
+    await fetchPageData(pageNumber);
+    // el padre debe actualizar currentPage después de la carga
   };
 
-  // 📄 Renderizar los botones de paginación
-  const renderPages = () =>
-    Array.from({ length: pages }).map((_, index) => (
-      <li key={index}>
-        <a
-          onClick={(e) => handlePageClick(e, index + 1)}
-          className={`flex items-center justify-center px-4 h-10 leading-tight ${
-            currentPage === index + 1
-              ? "text-blue-600 bg-blue-50 border-blue-300"
-              : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-          }`}
-        >
-          {index + 1}
-        </a>
-      </li>
-    ));
+  // Renderizar botones de paginación (si no hay páginas, nada)
+  const renderPages = () => {
+
+    return Array.from({ length: pages }).map((_, index) => {
+      const pageNum = index + 1;
+      const isActive = pageNum === currentPage;
+
+      return (
+        <li key={pageNum}>
+          <a
+            onClick={(e) => handlePageClick(e, pageNum)}
+            className={`flex items-center justify-center px-4 h-10 leading-tight border ${
+              isActive
+                ? "text-blue-600 bg-blue-50 border-blue-300"
+                : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+            }`}
+          >
+            {pageNum}
+          </a>
+        </li>
+      );
+    });
+  };
+
+  const prevDisabled = currentPage <= 1;
+  const nextDisabled = pages <= 1 || currentPage >= pages;
 
   return (
     <>
@@ -80,7 +105,7 @@ export default function CustomTable({
           ) : data.length === 0 ? (
             <tr>
               <td colSpan={headers.length + 1} className="text-center">
-                No hay proyectos
+                No hay {tablename}
               </td>
             </tr>
           ) : (
@@ -102,32 +127,32 @@ export default function CustomTable({
           )}
         </tbody>
       </table>
-      <div className="flex justify-between mt-4">
-        <select onChange={handlePerPage} value={perPage}>
+
+      <div className="flex justify-between mt-4 items-center">
+        <select onChange={handlePerPage} value={perPage} className="mr-4">
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
         </select>
+
         <nav>
           <ul className="flex items-center -space-x-px">
             <li>
               <a
                 onClick={(e) => handlePageClick(e, currentPage - 1)}
-                className={`px-4 h-10 ${
-                  currentPage === 1 ? "opacity-50 pointer-events-none" : ""
-                }`}
+                className={`px-4 h-10 ${prevDisabled ? "opacity-50 pointer-events-none" : ""}`}
               >
                 <FaArrowLeft />
               </a>
             </li>
+
             {renderPages()}
+
             <li>
               <a
                 onClick={(e) => handlePageClick(e, currentPage + 1)}
-                className={`px-4 h-10 ${
-                  currentPage === pages ? "opacity-50 pointer-events-none" : ""
-                }`}
+                className={`px-4 h-10 ${nextDisabled ? "opacity-50 pointer-events-none" : ""}`}
               >
                 <FaArrowRight />
               </a>
