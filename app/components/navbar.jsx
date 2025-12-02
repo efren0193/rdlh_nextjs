@@ -16,7 +16,6 @@ const Navbar = ({servicios}) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  if(pathname.startsWith('/invitaciones'))return null;
 
   // Toggle function to handle the navbar's display
   const handleNav = () => {
@@ -42,7 +41,7 @@ const Navbar = ({servicios}) => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  })
+  }, [])
 
 
   const updateTheme = () => {
@@ -67,6 +66,8 @@ const Navbar = ({servicios}) => {
     { id: 5, text: '', html: theme === 'dark'?<MdBrightness7 onClick={updateTheme}/> : <MdBrightness2 onClick={updateTheme} />},
   ];
 
+  if(pathname.startsWith('/invitaciones'))return null;
+  
   return (
     <div className={`w-full fixed z-10 ${top ? 'shadow-md bg-light dark:bg-black text-dark dark:text-primary':'shadow-none text-primary'}`}>
         <div className=' flex justify-between h-20 items-center px-4 sm:px-8 md:max-w-screen-md lg:max-w-screen-lg mx-auto '>

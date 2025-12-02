@@ -7,15 +7,15 @@ import Link from "next/link";
 
 export default function Footer() {
 
-    const pathname = usePathname();
-    if(pathname.startsWith('/invitaciones'))return null;
-
     const [year, setYear] = useState(0);
+    const pathname = usePathname();
 
     useEffect(() => {
         const date = new Date();
         setYear(date.getFullYear());
     }, []); 
+
+    if(pathname.startsWith('/invitaciones'))return null;
 
     return (
         <div className="text-dark dark:text-primary grid grid-flow-row md:grid-flow-col 

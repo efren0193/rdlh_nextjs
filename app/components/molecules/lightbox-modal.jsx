@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Modal from 'react-modal';
+import Image from 'next/image';
 
 // Modal.setAppElement('#__next'); // Ajusta el selector según tu configuración
 
@@ -54,10 +55,10 @@ export default function LightboxModal({ isOpen, onRequestClose, imageUrl, showPr
             <AiOutlineLoading3Quarters size={'30'}/>
           </div>
           :
-          <img
+          <Image
             src={`${process.env.NEXT_PUBLIC_CLOUDINARY_URL}w_1200/${imageUrl}`}
-            alt="Lightbox Image"
-            className="block m-auto object-contain rounded-md"
+            alt=''
+            className='block m-auto object-contain rounded-md'
             style={imgStyle}
             onLoad={handleImageLoad} 
           />
