@@ -48,8 +48,8 @@ export default function Services() {
             </div>
             <CustomTable 
                 data={services}
-                headers={['Nombre', 'Fecha','Imágenes', 'Videos']}
-                items={['name', 'date', 'images', 'videos']}
+                headers={['Nombre' ]}
+                items={['name']}
                 table="services"
                 tablename="Servicios"
                 setLimit={setLimit}
