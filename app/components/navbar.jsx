@@ -41,7 +41,7 @@ const Navbar = ({servicios}) => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  })
 
 
   const updateTheme = () => {
