@@ -3,6 +3,14 @@ import Slider from "./components/slider";
 import PostsServer from "./home/posts-server";
 import Slider1 from "./home/slider1";
 import Testimonials from "./home/testimonials";
+import { buildMetadata } from "@/utils/metadata";
+
+export const metadata = buildMetadata({
+  title: "Inicio",
+  description: "Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía.",
+  slug: "",
+  keywords: ["servicios", "producción", "video", "audio", "fotografía"],
+});
 
 export default function HomePage() {
     return <div className="dark:bg-dark bg-light"> 

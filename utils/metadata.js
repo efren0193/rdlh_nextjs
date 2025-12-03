@@ -62,5 +62,8 @@ export function buildMetadata({
       follow: true,
       googleBot: { index: true, follow: true },
     },
+    other: {
+      'google-adsense-account': 'ca-pub-6852951691963940'
+    }
   };
 }
