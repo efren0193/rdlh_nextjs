@@ -7,7 +7,7 @@ import { buildMetadata } from "@/utils/metadata";
 
 export const metadata = buildMetadata({
   title: "Inicio",
-  description: "Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía.",
+  description: "Explora, admira y conéctate. Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía.",
   slug: "",
   keywords: ["servicios", "producción", "video", "audio", "fotografía"],
 });
