@@ -15,7 +15,7 @@ export const metadata = buildMetadata({
 export default function HomePage() {
     return <div className="dark:bg-dark bg-light"> 
         <Slider 
-            title={'Explora, admira y conectate'} 
+            title={'Explora, admira y conéctate'} 
             subtitle={'Capturamos la belleza de la región huasteca a través de la producción de audio, video y fotografía'}
             main={true}
         />
